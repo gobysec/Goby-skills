@@ -67,6 +67,14 @@ python scripts/goby_tool.py scan progress --taskid 20260326183000
 ```
 
 ```bash
+python scripts/goby_tool.py scan stop --taskid 20260326183000
+```
+
+```bash
+python scripts/goby_tool.py scan resume --taskid 20260326183000
+```
+
+```bash
 python scripts/goby_tool.py task list
 ```
 

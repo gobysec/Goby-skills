@@ -509,6 +509,24 @@ def cmd_scan_progress(args: argparse.Namespace) -> int:
     return print_api_result(args, "POST", "/api/v1/getProgress", payload, "scan_progress")
 
 
+def scan_task_payload(taskid: str) -> dict:
+    # Goby handlers are not fully consistent about task id field naming.
+    return {
+        "taskid": taskid,
+        "taskId": taskid,
+    }
+
+
+def cmd_scan_stop(args: argparse.Namespace) -> int:
+    payload = scan_task_payload(args.taskid)
+    return print_api_result(args, "POST", "/api/v1/stopScan", payload, "scan_stop")
+
+
+def cmd_scan_resume(args: argparse.Namespace) -> int:
+    payload = scan_task_payload(args.taskid)
+    return print_api_result(args, "POST", "/api/v1/resumeScan", payload, "scan_resume")
+
+
 def cmd_task_list(args: argparse.Namespace) -> int:
     method = "POST" if args.post else "GET"
     payload = {} if method == "POST" else None
@@ -633,6 +651,18 @@ def build_parser() -> argparse.ArgumentParser:
     scan_progress.add_argument("--base-url")
     scan_progress.add_argument("--timeout", type=int, default=10)
     scan_progress.set_defaults(func=cmd_scan_progress)
+
+    scan_stop = scan_sub.add_parser("stop", help="Stop a scan task.")
+    scan_stop.add_argument("--taskid", required=True)
+    scan_stop.add_argument("--base-url")
+    scan_stop.add_argument("--timeout", type=int, default=10)
+    scan_stop.set_defaults(func=cmd_scan_stop)
+
+    scan_resume = scan_sub.add_parser("resume", help="Resume a stopped scan task.")
+    scan_resume.add_argument("--taskid", required=True)
+    scan_resume.add_argument("--base-url")
+    scan_resume.add_argument("--timeout", type=int, default=30)
+    scan_resume.set_defaults(func=cmd_scan_resume)
 
     task_parser = subparsers.add_parser("task", help="List or inspect tasks.")
     task_sub = task_parser.add_subparsers(dest="task_command", required=True)
