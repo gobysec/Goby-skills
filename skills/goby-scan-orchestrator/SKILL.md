@@ -234,6 +234,19 @@ Scans are long-running operations (minutes to hours). During an active scan:
 - if the user asks about scan status, call `scan progress --taskid <taskid>` and report the result; do not interpret a long-running state as a reason to stop
 - if you need to wait for a scan to complete, poll with `scan progress` at reasonable intervals and inform the user of progress; never terminate the scan to "move things along"
 
+## Post-scan-start behavior
+
+After `scan start` succeeds:
+1. Record the returned `taskid` and report it to the user immediately.
+2. Poll `scan progress --taskid <taskid>` up to 5-6 times at 30-second intervals.
+3. If the scan completes within that window, fetch and report results.
+4. If still running after the short window:
+   - Report current progress and the `taskid`.
+   - Tell the user they can return later and query with `scan progress` or `asset/vul search`.
+   - Ask: "Do you want me to keep monitoring until the scan finishes?"
+5. If the user says yes, continue polling every 2 minutes until progress reaches 100%, then fetch and report results.
+6. Never stop the scan to "move things along".
+
 When reporting:
 1. readiness or task status
 2. scope or selected task
