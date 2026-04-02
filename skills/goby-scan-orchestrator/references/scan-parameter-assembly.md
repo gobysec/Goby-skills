@@ -131,7 +131,7 @@ Use:
 ```json
 {
   "asset": {
-    "ips": ["1.1.1.1", "2.2.2.2"],
+    "ips": ["192.0.2.1", "192.0.2.2"],
     "ports": "80,443"
   }
 }
@@ -145,8 +145,8 @@ Use:
 {
   "asset": {
     "ips": [
-      "http://118.145.183.131:3001",
-      "https://81.0.248.189"
+      "http://198.51.100.1:3001",
+      "https://198.51.100.2"
     ]
   },
   "options": {
@@ -163,8 +163,8 @@ Use:
 {
   "asset": {
     "ips": [
-      "http://118.145.183.131:3001",
-      "https://81.0.248.189"
+      "http://198.51.100.1:3001",
+      "https://198.51.100.2"
     ],
     "ports": "80,443"
   }
@@ -181,10 +181,10 @@ Before scanning, the assistant should internally decide:
 If clarification is needed, ask only for the missing decision.
 
 Examples:
-- `scan 1.1.1.1` -> ask for `enterprise`, `compact`, or `full`
-- `scan 1.1.1.1 port 80` -> build payload and continue
-- `scan http://1.1.1.1:3001 https://2.2.2.2` -> build `hostListMode=true` payload and continue
-- `scan http://1.1.1.1:3001 https://2.2.2.2 with ports 80,443` -> build normal payload and continue
+- `scan 192.0.2.1` -> ask for `enterprise`, `compact`, or `full`
+- `scan 192.0.2.1 port 80` -> build payload and continue
+- `scan http://192.0.2.1:3001 https://192.0.2.2` -> build `hostListMode=true` payload and continue
+- `scan http://192.0.2.1:3001 https://192.0.2.2 with ports 80,443` -> build normal payload and continue
 
 ## Execution reminder
 

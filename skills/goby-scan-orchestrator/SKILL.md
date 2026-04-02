@@ -54,6 +54,7 @@ Do not:
 - invent unsupported CLI flags; use only arguments implemented by `scripts/goby_tool.py`
 - accept any executable path not provided by the user or loaded from persisted config
 - search the repository, workspace, or local disks for `goby-cmd`; if the stored path is missing or invalid, stop and ask the user for the full executable path
+- stop or pause a running scan on your own initiative; scans are long-running operations that may take minutes to hours — never call `scan stop` unless the user explicitly requests it
 
 ## Session order
 
@@ -138,10 +139,10 @@ Default port-scope values for clarification:
 - full: all ports
 
 Examples:
-- `scan 1.1.1.1` -> `host-only`
-- `scan 1.1.1.1 2.2.2.2 ports 80,443` -> `host-with-ports`
-- `scan http://118.145.183.131:3001 https://81.0.248.189` -> `url-only`
-- `scan http://118.145.183.131:3001 https://81.0.248.189 with ports 80,443` -> `url-with-ports`
+- `scan 192.0.2.1` -> `host-only`
+- `scan 192.0.2.1 192.0.2.2 ports 80,443` -> `host-with-ports`
+- `scan http://198.51.100.1:3001 https://198.51.100.2` -> `url-only`
+- `scan http://198.51.100.1:3001 https://198.51.100.2 with ports 80,443` -> `url-with-ports`
 
 ## Scan parameter assembly
 
@@ -227,6 +228,11 @@ Before updating POCs:
 Use the official POC update APIs rather than searching the repository for update logic.
 
 Do not stop or restart a user-managed Goby instance unless the user explicitly asks.
+
+Scans are long-running operations (minutes to hours). During an active scan:
+- do not call `scan stop` or `scan resume` unless the user asks
+- if the user asks about scan status, call `scan progress --taskid <taskid>` and report the result; do not interpret a long-running state as a reason to stop
+- if you need to wait for a scan to complete, poll with `scan progress` at reasonable intervals and inform the user of progress; never terminate the scan to "move things along"
 
 When reporting:
 1. readiness or task status
