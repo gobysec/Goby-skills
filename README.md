@@ -33,7 +33,7 @@
 
 如果你是首次使用，可以将以下指令复制给你的 AI 编程助手，它会自动将 skill 下载并安装到当前项目的对应目录：
 
-> 请从 https://github.com/gobysec/Goby-skills 下载 `skills/goby-scan-orchestrator` 目录，并将其安装到当前项目适合存放 AI skills 的目录下。
+> 请从 https://github.com/gobysec/Goby-skills 下载 `skills/goby-scan-orchestrator` 目录，安装到当前项目下该工具存放自定义 skill 的目录中。
 
 如果你已经安装过旧版本，建议使用更新指令覆盖本地已有版本，确保 skill 内容与仓库保持一致：
 
